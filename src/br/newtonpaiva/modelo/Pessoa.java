@@ -5,16 +5,35 @@
  */
 package br.newtonpaiva.modelo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+
 /**
  *
  * @author Tarley
  */
+@Entity
+@Table(name = "tb_pessoa")
 public class Pessoa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "COD_PESSOA")
     private Integer id;
+    @Column(name = "NOM_PESSOA")
     private String nome;
+    @Column(name = "DES_ENDERECO")
     private String endereco;
+    @Column(name = "NUM_CEP", length = 20, nullable = false)
     private String cep;
+    @Column(name = "NUM_TELEFONE")
     private String telefone;
+    @Column(name = "VAL_RENDA")
     private Double renda;
     
     public void registrar() {
