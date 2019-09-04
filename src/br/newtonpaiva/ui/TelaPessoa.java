@@ -6,19 +6,26 @@
 package br.newtonpaiva.ui;
 
 import br.newtonpaiva.modelo.Pessoa;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
  * @author Tarley
  */
 public class TelaPessoa extends javax.swing.JDialog {
-
+    private EntityManager em;
     /**
      * Creates new form TelaPessoa
      */
     public TelaPessoa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        em = Persistence
+                .createEntityManagerFactory("BancoNewtonPU")
+                .createEntityManager();
     }
 
     /**
@@ -150,9 +157,15 @@ public class TelaPessoa extends javax.swing.JDialog {
         p.setEndereco(end);
         p.setCep(cep);
         p.setTelefone(tel);
-        p.setRenda(Double.parseDouble(renda.replace(",", ".")));
+        p.setRenda(
+            Double.parseDouble("0" +
+                    renda.replace(",", ".")));
         
-        p.registrar();
+        //p.registrar();
+        
+        em.getTransaction().begin();
+        em.persist(p);
+        em.getTransaction().commit();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
